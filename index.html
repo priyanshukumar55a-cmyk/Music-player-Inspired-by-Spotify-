@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="utility.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/utility.css">
     <link rel="icon" type="image/x-icon" href="Favicon.ico">
     <title>Spotify - Web Player: Music for everyone</title>
 </head>
@@ -12,17 +12,17 @@
     <div class="container flex-container bg-black">
         <div class="left">
             <div class="home bg-grey rounded p-1">
-                <div class="logo" style="display: flex;"><img class="invert" src="logo.svg" alt="Error"><h2>Spotify</h2> 
-                    <img style="margin-left: auto;" class="invert cross" src="cross.svg" alt="">
+                <div class="logo" style="display: flex;"><img class="invert" src="svgs/logo.svg" alt="Error"><h2>Spotify</h2> 
+                    <img style="margin-left: auto;" class="invert cross" src="svgs/cross.svg" alt="">
                 </div>
                 <ul>
-                    <li><img class="invert" src="home.svg" alt="home">Home</li>
-                    <li><img class="invert" src="search.svg" alt="search">Search</li>
+                    <li><img class="invert" src="svgs/home.svg" alt="home">Home</li>
+                    <li><img class="invert" src="svgs/search.svg" alt="search">Search</li>
                 </ul>
             </div>
             <div class="library bg-grey rounded p-1">
                 <div class="heading">
-                    <img class="invert" src="library.svg" alt="library">
+                    <img class="invert" src="svgs/library.svg" alt="library">
                     <h3>
                         Your Library
                     </h3>
@@ -45,9 +45,9 @@
         <div class="right bg-grey">
             <div class="header">
                 <div style="display: flex;" class="nav">
-                    <img class="invert hamburger" src="hamburger.svg" alt="">
-                    <img class="invert" src="left.svg" alt="left-arrow">
-                    <img class="invert" src="right.svg"alt="right-arrow">
+                    <img class="invert hamburger" src="svgs/hamburger.svg" alt="">
+                    <img class="invert" src="svgs/left.svg" alt="left-arrow">
+                    <img class="invert" src="svgs/right.svg"alt="right-arrow">
                 </div>
                 <div class="buttons">
                     <button class="signup-btn">Sign up</button>
@@ -57,20 +57,6 @@
             <div class="spotify-playlists">
                 <h2>Spotify Playlists</h2>
                 <div class="card_container">
-                    <div data-folder="cs" class="card">
-                        <img class="play-icon" src="play.svg" alt="Play-Button">
-                        <img src="https://i.scdn.co/image/ab67616d00001e02ce1f4349305971b5beb75fcd" alt="Error">
-                        <h3>Happy Hits!</h3>
-                        <p style="font-size: small;">Hits to boost your mood and fill your day with joy.</p>
-                    </div>
-                    
-                    <div data-folder="ncs" class="card">
-                        <img class="play-icon" src="play.svg" alt="Play-Button">
-                        <img src="https://i.scdn.co/image/ab67616d0000b273d277955154fbc0a2936e3cf4" alt="Error">
-                        <h3>Happy Hits!</h3>
-                        <p style="font-size: small;">Hits to boost your mood and fill your day with joy.</p>
-                    </div>
-
                     <!-- <div class="card">
                         <img class="play-icon" src="play.svg" alt="Play-Button">
                         <img src="https://upload.wikimedia.org/wikipedia/en/e/ee/Genius_official_poster.jpg" alt="Error">
@@ -110,15 +96,15 @@
                 </div>
                 <div class="songbuttons">
                     <!-- <img class="invert" src="shuffle.svg" alt="shuffle"> -->
-                    <img id="previous" class="invert" src="previous.svg" alt="previous">
-                    <img id="play" class="invert" src="play-foot.svg" alt="play-circle">
-                    <img id="next" class="invert" src="next.svg" alt="next">
+                    <img id="previous" class="invert" src="svgs/previous.svg" alt="previous">
+                    <img id="play" class="invert" src="svgs/play-foot.svg" alt="play-circle">
+                    <img id="next" class="invert" src="svgs/next.svg" alt="next">
                     <!-- <img class="invert" src="repeat.svg" alt="repeat"> -->
                 </div>
                 <div class="songtime-vol">
                     <div class="songtime"></div>
                     <div class="volume">
-                        <img class="vol_svg" src="volume.svg" alt="">
+                        <img class="vol_svg" src="svgs/volume.svg" alt="">
                         <div class="vol-range">
                             <input type="range" name="volume">
                         </div>
@@ -127,6 +113,6 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

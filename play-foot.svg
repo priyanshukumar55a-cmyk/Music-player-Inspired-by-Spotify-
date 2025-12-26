@@ -1,9 +1,0 @@
-<svg width="32" height="32" viewBox="0 0 64 64"
-     xmlns="http://www.w3.org/2000/svg">
-  
-  <!-- Black Circle -->
-  <circle cx="32" cy="32" r="32" fill="#000000"/>
-
-  <!-- White Play Triangle -->
-  <path d="M26 20 L26 44 L44 32 Z" fill="#ffffff"/>
-</svg>
