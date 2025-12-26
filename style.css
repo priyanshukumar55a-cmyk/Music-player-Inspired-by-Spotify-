@@ -272,7 +272,7 @@ html,body{
 }
 
 
-.card-container{
+.card_container{
     margin-top:16px;
     display:flex;
     gap:10px;
@@ -447,6 +447,9 @@ html,body{
     gap: 12px;
     justify-content: center;
 }
+.volume img{
+    cursor: pointer;
+}
 /* ================= VOLUME SLIDER ================= */
 
 input[type="range" i] {
@@ -504,7 +507,7 @@ input[type="range" i] {
         width:42vw;
         height:52vh;
     }
-    .card-container{
+    .card_container{
         margin:0;
         justify-content: center;
     }
@@ -524,7 +527,7 @@ input[type="range" i] {
         margin: 0 ;
         border-radius: 0;
     }
-    .card-container{
+    .card_container{
         padding-top: 10px;
     }
     .songtime{

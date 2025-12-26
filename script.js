@@ -4,6 +4,8 @@ let currFolder;
 let currentSong = new Audio();
 let currentLi = null;
 let songs;
+let lastVolume = 1;
+
 function secondsToMinutesSeconds(seconds) {
     if (isNaN(seconds) || seconds === Infinity) return "00:00";
 
@@ -18,7 +20,7 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
     currFolder=folder;
-    let res = await fetch(`http://127.0.0.1:3000/${folder}/`);
+    let res = await fetch(`http://127.0.0.1:3000/songs/${folder}/`);
     let html = await res.text();
 
     let div = document.createElement("div");
@@ -82,10 +84,49 @@ function playMusic(src,pause=false) {
     document.querySelector(".songtime").innerHTML="00:00 / 00:00";
 }
 
+async function displayAlbums(){
+    let a=await fetch(`http://127.0.0.1:3000/songs/`)
+    let response=await a.text();
+    let div=document.createElement("div")
+    div.innerHTML=response;
+    console.log(div);
+    let anchors=div.getElementsByTagName("a")
+    console.log(a)
+
+    const card_container = document.querySelector(".card_container");
+    let array=Array.from(anchors)
+    for (let index = 0; index < array.length; index++) {
+        const e = array[index];
+        
+        if(e.href.includes("songs")){
+            let folder=e.href.split("C").slice(-1)
+
+            //Get the meta data of the folder
+            let a=await fetch(`http://127.0.0.1:3000/songs/${folder}/info.json`)
+            let response=await a.json();
+            card_container.innerHTML=card_container.innerHTML+`<div data-folder="cs" class="card">
+                    <img class="play-icon" src="play.svg" alt="Play-Button">
+                    <img src="/songs/${folder}/cover.jpg" alt="Error">
+                    <h3 style="font-size:16px">${response.title}</h3>
+                    <p style="font-size: small;">${response.title}</p>
+                </div>`
+        }
+    }
+    //load the playlist whenever card is clicked
+    Array.from(document.getElementsByClassName("card")).forEach(e => {
+        e.addEventListener("click",async item=>{
+            songs=await getSongs(`${item.currentTarget.dataset.folder}`)
+        })
+    });
+}
+
 async function main() {
     await getSongs("ncs");
     
     playMusic(songs[0],true);
+
+    //Display all the albums on the page
+    displayAlbums() 
 
     // ✅ Play / Pause button (only once)
     play.addEventListener("click", () => {
@@ -206,17 +247,38 @@ async function main() {
         if(index<songs.length-1) playMusic(songs[index+1]);
     })
 
-    //Addd an event listener in volume
-    document.querySelector(".vol-range").getElementsByTagName("input")[0].addEventListener("change",(e)=>{
-        currentSong.volume=parseInt(e.target.value)/100
-    })
+    //Add an event listener in volume
+    const volumeIcon = document.querySelector(".volume > img");
+    const volumeRange = document.querySelector(".vol-range input");
 
-    //load the playlist whenever card is clicked
-    Array.from(document.getElementsByClassName("card")).forEach(e => {
-        e.addEventListener("click",async item=>{
-            songs=await getSongs(`${item.currentTarget.dataset.folder}`)
-        })
+    volumeRange.addEventListener("input", (e) => {
+        currentSong.volume = e.target.value / 100;
+
+        if (currentSong.volume === 0) {
+            volumeIcon.src = "mute.svg";
+        } else {
+            volumeIcon.src = "volume.svg";
+            lastVolume = currentSong.volume;
+        }
     });
+
+    //Add an event listener in volume svg to mute it
+    volumeIcon.addEventListener("click", () => {
+
+        if (currentSong.volume === 0) {
+            // UNMUTE
+            currentSong.volume = lastVolume || 0.5;
+            volumeRange.value = lastVolume * 100;
+            volumeIcon.src = "volume.svg";
+        } else {
+            // MUTE
+            lastVolume = currentSong.volume;
+            currentSong.volume = 0;
+            volumeRange.value = 0;
+            volumeIcon.src = "mute.svg";
+        }
+    });
+
 }
 
 window.addEventListener("DOMContentLoaded", main);
