@@ -76,7 +76,7 @@ function playMusic(src,pause=false) {
 }
 
 async function displayAlbums(){
-    let a = await fetch(`/api/albums`);
+    let a = await fetch(`/api/songs/albums`);
     let folders = await a.json();
 
     const card_container = document.querySelector(".card_container");
