@@ -4,7 +4,7 @@ import path from "path";
 export default function handler(req, res) {
   const { folder } = req.query;
 
-  const songsDir = path.join(process.cwd(), "public", "songs", folder);
+  const songsDir = path.join(process.cwd(), "public/songs", folder);
 
   if (!fs.existsSync(songsDir)) {
     return res.status(404).json({ error: "Folder not found" });
