@@ -1,5 +1,7 @@
 {
-  "routes": [
-    { "src": "/songs/(.*)", "dest": "/public/songs/$1" }
-  ]
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
 }
