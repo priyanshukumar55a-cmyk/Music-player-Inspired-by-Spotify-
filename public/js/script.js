@@ -24,7 +24,7 @@ async function getSongs(folder) {
     let res = await fetch(`/api/songs/${folder}`);
     let files = await res.json();
 
-    songs = files.map(f => `/songs/${folder}/${f}`);
+    songs = files.map(f => `/songs/${encodeURIComponent(folder)}/${f}`);
 
     let songUL = document.querySelector(".song-list ul");
     if (!songUL) return;
@@ -67,34 +67,44 @@ function playMusic(src,pause=false) {
     document.querySelector(".songtime").innerHTML="00:00 / 00:00";
 }
 
-async function displayAlbums(){
-    let a = await fetch(`/api/songs/albums`);
-    let folders = await a.json();
+async function displayAlbums() {
+    try {
+        let a = await fetch(`/api/songs/albums`);
+        let folders = await a.json();
 
-    const card_container = document.querySelector(".card_container");
-    card_container.innerHTML = "";
+        const card_container = document.querySelector(".card_container");
+        card_container.innerHTML = "";
 
-    for (let folder of folders) {
-        let meta = await fetch(`/songs/${folder}/info.json`);
-        let response = await meta.json();
+        for (let folder of folders) {
+            const encoded = encodeURIComponent(folder);
 
-        card_container.innerHTML += `
-        <div data-folder="${folder}" class="card">
-            <img class="play-icon" src="svgs/play.svg">
-            <img src="/songs/${folder}/cover.jpg">
-            <h3>${response.title}</h3>
-            <p>${response.description}</p>
-        </div>`;
-    }
+            let metaRes = await fetch(`/songs/${encoded}/info.json`);
+            if (!metaRes.ok) continue; // prevent crash
 
-    // ✅ Add click listeners AFTER cards are rendered
-    Array.from(document.getElementsByClassName("card")).forEach(card => {
-        card.addEventListener("click", async item => {
-            songs = await getSongs(item.currentTarget.dataset.folder);
-            playMusic(songs[0]);
+            let response = await metaRes.json();
+
+            card_container.innerHTML += `
+            <div data-folder="${folder}" class="card">
+                <img class="play-icon" src="svgs/play.svg">
+                <img src="/songs/${encoded}/cover.jpg">
+                <h3>${response.title}</h3>
+                <p>${response.description}</p>
+            </div>`;
+        }
+
+        // attach listeners AFTER render
+        document.querySelectorAll(".card").forEach(card => {
+            card.addEventListener("click", async () => {
+                songs = await getSongs(card.dataset.folder);
+                playMusic(songs[0]);
+            });
         });
-    });
+
+    } catch (err) {
+        console.error("Album loading error:", err);
+    }
 }
+
 
 
 async function main() {
