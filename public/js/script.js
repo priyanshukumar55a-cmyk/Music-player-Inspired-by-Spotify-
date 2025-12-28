@@ -134,10 +134,10 @@ async function main() {
 
     //Add an event listener to previous & next
     previous.addEventListener("click",()=>{
-        if(index>0) playMusic(songs[currentIndex-1]);
+        if(currentIndex>0) playMusic(songs[currentIndex-1]);
     })
     next.addEventListener("click",()=>{
-        if(index<songs.length-1) playMusic(songs[currentIndex+1]);
+        if(currentIndex<songs.length-1) playMusic(songs[currentIndex+1]);
     })
 
     currentSong.addEventListener("ended", () => {
