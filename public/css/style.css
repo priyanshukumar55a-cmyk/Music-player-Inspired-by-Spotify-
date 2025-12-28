@@ -307,8 +307,11 @@ html,body{
     border-radius:8px;
 }
 
-.card h3,
+.card h3{
+    padding:6px;
+}
 .card p{
+    font-size: 12px;
     padding:6px;
 }
 
@@ -510,7 +513,7 @@ input[type="range" i] {
     .card{
         position: relative;
         width:42vw;
-        height:51vh;
+        height:40vh;
     }
     .card_container{
         margin:0;
@@ -518,15 +521,17 @@ input[type="range" i] {
     }
     .card img:nth-of-type(2){
         position: absolute;
-        height:42vh;
+        height:30vh;
     }
     .card h3{
         position: absolute;
-        top:43vh;
+        top:30.5vh;
+        font-size: 25px;
     }
     .card p{
-        position: absolute;
-        top:46.5vh;
+        position: relative;
+        top:34.5vh;
+        font-size: 15px;
     }
     .header{
         margin: 0 ;
@@ -569,20 +574,52 @@ input[type="range" i] {
         justify-content: center;
         width: 100%;
     }
-/* 
-    .range input[type="range"]{
-        width: 120px;
-    } */
+    .play-icon {
+        position: absolute;
+        bottom: 115px;
+        right: 14px;
+        width: 44px;
+        height: 44px;
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+        pointer-events: none; /* prevent blocking card click */
+        z-index:5;
+    }
+
+    .card:active .play-icon{
+        opacity: 1;
+        transform: translateY(-38px) scale(1);
+    }
 }
 @media (max-width: 450px) {
     .card{
         width:96vw;
-        height:55vh
+        height:56vh
+    }
+    .card h3{
+        top:42vh;
     }
     .card p{
         top:47.5vh;
     }
+    .card img:nth-of-type(2){
+        position: absolute;
+        height:42vh;
+    }
     .spotify-playlists h2{
         font-size: 30px;
+    }
+}
+@media (width:540px){
+    .card{
+        height:42.5vh;
+    }
+    .card h3{
+        font-size: 20px;
+        top:30vh;
+    }
+    .card p{
+        top:35vh;
     }
 }
