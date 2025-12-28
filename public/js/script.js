@@ -26,6 +26,7 @@ async function getSongs(folder) {
     songs = files.map(f => `/songs/${folder}/${f}`);
 
     let songUL = document.querySelector(".song-list ul");
+    if (!songUL) return;
 
     songUL.innerHTML = "";
     for (let song of songs) {
@@ -47,17 +48,6 @@ async function getSongs(folder) {
         </li>`;
     }
 
-    // ✅ ONE click handler (event delegation)
-    songUL.addEventListener("click", (e) => {
-        let li = e.target.closest("li");
-        if (!li) return;
-
-        if (currentLi) currentLi.classList.remove("active");
-        currentLi = li;
-        currentLi.classList.add("active");
-
-        playMusic(li.dataset.src);
-    });
     return songs;
 }
 
@@ -106,12 +96,28 @@ async function displayAlbums(){
 
 
 async function main() {
-    await getSongs("cs");
+    const play = document.getElementById("play");
+    const previous = document.getElementById("previous");
+    const next = document.getElementById("next");
+
+    await getSongs("chill music");
     
     playMusic(songs[0],true);
 
     //Display all the albums on the page
     displayAlbums() 
+
+    document.querySelector(".song-list ul").addEventListener("click", (e) => {
+        let li = e.target.closest("li");
+        if (!li) return;
+
+        if (currentLi) currentLi.classList.remove("active");
+        currentLi = li;
+        currentLi.classList.add("active");
+
+        playMusic(li.dataset.src);
+    });
+
 
     // ✅ Play / Pause button (only once)
     play.addEventListener("click", () => {
@@ -124,12 +130,26 @@ async function main() {
         }
     });
 
+    //Add an event listener to previous & next
+    previous.addEventListener("click",()=>{
+        let index=songs.indexOf(currentSong.src)
+        if(index>0) playMusic(songs[index-1]);
+    })
+    next.addEventListener("click",()=>{
+        let index=songs.indexOf(currentSong.src)
+        if(index<songs.length-1) playMusic(songs[index+1]);
+    })
+
     currentSong.addEventListener("ended", () => {
         play.src = "svgs/play-foot.svg";
     });
 
     const progress = document.querySelector(".progress");
     let isDragging = false;
+
+    //Drag functionality for seekbar
+    const seekbar = document.querySelector(".seekbar");
+    const circle = document.querySelector(".circle");
 
     //Listen to timeupdate event to update the seekbar and time display
     currentSong.addEventListener("timeupdate", () => {
@@ -154,10 +174,6 @@ async function main() {
         currentSong.currentTime=(percent/100)*currentSong.duration;
         progress.style.width = percent + "%";
     });
-
-    //Drag functionality for seekbar
-    const seekbar = document.querySelector(".seekbar");
-    const circle = document.querySelector(".circle");
 
     // Start dragging
     circle.addEventListener("mousedown", (e) => {
@@ -220,17 +236,6 @@ async function main() {
         document.querySelector(".left").style.left="-110%";
         playbar.classList.remove("hidden"); //show playbar when sidebar is closed
     });
-
-    //Add an event listener to previous
-    previous.addEventListener("click",()=>{
-        let index=songs.indexOf(currentSong.src)
-        if(index>0) playMusic(songs[index-1]);
-    })
-    //Add an event listener to next 
-    next.addEventListener("click",()=>{
-        let index=songs.indexOf(currentSong.src)
-        if(index<songs.length-1) playMusic(songs[index+1]);
-    })
 
     //Add an event listener in volume
     const volumeIcon = document.querySelector(".volume > img");
