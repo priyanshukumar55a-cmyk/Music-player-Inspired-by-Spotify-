@@ -240,6 +240,16 @@ async function main() {
         isDragging = false;
     });
 
+    //eventlistener to play the next song if current song ends
+    currentSong.addEventListener("ended",()=>{
+        if(currentIndex<songs.length-1){
+            playMusic(songs[currentIndex+1]);
+        }
+        else{
+            playMusic(songs[0]);
+        }
+    })
+
     const playbar = document.querySelector(".playbar");
     const leftSidebar = document.querySelector(".left");
 
