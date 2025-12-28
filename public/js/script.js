@@ -5,6 +5,7 @@ let currentSong = new Audio();
 let currentLi = null;
 let songs;
 let lastVolume = 1;
+let currentIndex = 0;
 
 function secondsToMinutesSeconds(seconds) {
     if (isNaN(seconds) || seconds === Infinity) return "00:00";
@@ -52,6 +53,7 @@ async function getSongs(folder) {
 }
 
 function playMusic(src,pause=false) {
+    currentIndex = songs.indexOf(src);
     currentSong.src =src;
     if(!pause){
         currentSong.play();
@@ -132,12 +134,10 @@ async function main() {
 
     //Add an event listener to previous & next
     previous.addEventListener("click",()=>{
-        let index=songs.indexOf(currentSong.src)
-        if(index>0) playMusic(songs[index-1]);
+        if(index>0) playMusic(songs[currentIndex-1]);
     })
     next.addEventListener("click",()=>{
-        let index=songs.indexOf(currentSong.src)
-        if(index<songs.length-1) playMusic(songs[index+1]);
+        if(index<songs.length-1) playMusic(songs[currentIndex+1]);
     })
 
     currentSong.addEventListener("ended", () => {
