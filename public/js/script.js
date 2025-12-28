@@ -97,6 +97,14 @@ async function displayAlbums() {
             card.addEventListener("click", async () => {
                 songs = await getSongs(card.dataset.folder);
                 playMusic(songs[0]);
+                document.querySelector(".left").style.left="0";
+                
+                //remove play-icon from all cards
+                document.querySelectorAll(".card").forEach(c=>{
+                    c.classList.remove("show-play")
+                })
+                //add play icon on the clicked card
+                card.classList.add("show-play")
             });
         });
 

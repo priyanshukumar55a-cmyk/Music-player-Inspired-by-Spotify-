@@ -333,7 +333,7 @@ html,body{
     transition:opacity 0.4s ease, transform 0.4s ease;
 }
 
-.card:hover .play-icon{
+.card.show-play .play-icon{
     opacity:1;
     transform:translateY(-10px) scale(1.1);
 }
